@@ -3,21 +3,28 @@ import { useNavigate } from "react-router-dom";
 
 const SectionPage = () => {
     const FristYear_Girls = useNavigate()
+    const FristYear_Boys = useNavigate()
+    const SecondYear_Girls = useNavigate()
+    const SecondYear_Boys = useNavigate()
 
     const handleFristGirls = () => {
-        FristYear_Girls("/fristyear-Girls")
+        const title = "1st-year Girls"
+        FristYear_Girls("/fristyear-Girls",{state: {title}})
     }
 
     const handleFristBoys = () => {
-
+        const title = "1st-year Boys"
+        FristYear_Boys("/fristyear-Boys",{state: {title}})
     }
 
     const handleSecondGirls = () => {
-
+        const title = "2nd-year Girls"
+        SecondYear_Girls("/secondyear_Girls", {state: {title}})
     }
 
     const handleSecondBoys = () => {
-
+        const title = "2nd-year Boys"
+        SecondYear_Boys("/secondyear_Boys", {state: {title}})
     }
 
     const handleNews = () => {

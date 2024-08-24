@@ -1,72 +1,57 @@
 import React, { useState } from "react";
 import CalendarData from "../Calender/CalenderData";
 
-const FirstYearGirls = () => {
+const StudentNames = ({ selectedDate: initialSelectedDate }) => {
   const [input, setInput] = useState("");
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(initialSelectedDate || new Date());
   const [studentNames, setStudentNames] = useState([
     { id: 2001, name: "Student A", attendance: {} },
     { id: 2002, name: "Student B", attendance: {} },
   ]);
 
-  const handleInput = (event) => {
-    setInput(event.target.value);
-  };
+  const handleInput = (event) => setInput(event.target.value);
 
   const handleClick = () => {
     if (input === "") {
-      alert("Enter Student Name")
-    }
-    else{
-        const newId =
-        studentNames.length > 0
-          ? Math.max(...studentNames.map((s) => s.id)) + 1
-          : 2001;
+      alert("Enter Student Name");
+    } else {
+      const newId = studentNames.length > 0 ? Math.max(...studentNames.map((s) => s.id)) + 1 : 2001;
       setStudentNames([
         ...studentNames,
         { id: newId, name: input, attendance: {} },
       ]);
+      setInput("");
     }
-    setInput("");
   };
 
   const getDaysInMonth = (date) => {
-    if (!(date instanceof Date)) {
-      return []; 
-    }
+    if (!(date instanceof Date)) return [];
     const year = date.getFullYear();
     const month = date.getMonth();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const dates = [];
-    for (let i = 1; i <= daysInMonth; i++) {
-      dates.push(new Date(year, month, i));
-    }
-    return dates;
+    return Array.from({ length: daysInMonth }, (_, i) => new Date(year, month, i + 1));
   };
 
   const daysInMonth = getDaysInMonth(selectedDate);
-  const today = new Date().toDateString(); // Get the current date
+  const today = new Date().toDateString();
 
   const toggleAttendance = (studentId, day) => {
     setStudentNames(
-      studentNames.map((student) => {
-        if (student.id === studentId) {
-          return {
-            ...student,
-            attendance: {
-              ...student.attendance,
-              [day]: !student.attendance[day],
-            },
-          };
-        }
-        return student;
-      })
+      studentNames.map((student) =>
+        student.id === studentId
+          ? {
+              ...student,
+              attendance: {
+                ...student.attendance,
+                [day]: !student.attendance[day],
+              },
+            }
+          : student
+      )
     );
   };
 
-  const onDateChange = (date) => {
-    setSelectedDate(date);
-  };
+  const onDateChange = (date) => setSelectedDate(date);
 
   return (
     <>
@@ -80,14 +65,10 @@ const FirstYearGirls = () => {
             value={input}
             onChange={handleInput}
           />
-          <button
-            className="bg-black px-3 py-1 rounded-md text-white"
-            onClick={handleClick}
-          >
+          <button className="bg-black px-3 py-1 rounded-md text-white" onClick={handleClick}>
             ADD
           </button>
         </div>
-
         <div className="overflow-x-auto bg-white rounded-lg shadow-lg">
           <table className="min-w-full table-auto">
             <thead>
@@ -110,12 +91,8 @@ const FirstYearGirls = () => {
                     <td key={day} className="px-2 py-2 text-center">
                       <input
                         type="checkbox"
-                        checked={
-                          student.attendance[day.toDateString()] || false
-                        }
-                        onChange={() =>
-                          toggleAttendance(student.id, day.toDateString())
-                        }
+                        checked={student.attendance[day.toDateString()] || false}
+                        onChange={() => toggleAttendance(student.id, day.toDateString())}
                         disabled={day.toDateString() !== today}
                       />
                     </td>
@@ -130,4 +107,4 @@ const FirstYearGirls = () => {
   );
 };
 
-export default FirstYearGirls;
+export default StudentNames;

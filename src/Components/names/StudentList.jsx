@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import CalendarData from '../Calender/CalenderData';
-import StudentNames from './SecondYearStudentNames';
+import StudentNames from './SecondYearBoys';
 import FirstYearGirls from './FristYearGirls'; 
+import FristYearBoys from './FristYearBoys';
 
 const App = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -10,7 +11,8 @@ const App = () => {
         <div>
             <CalendarData onDateChange={setSelectedDate} />
             <StudentNames selectedDate={selectedDate} />
-            <FirstYearGirls selectedDate={selectedDate} /> {/* Correct spelling */}
+            <FirstYearGirls selectedDate={selectedDate} /> 
+            <FristYearBoys selectedDate={selectedDate} />
         </div>
     );
 };
