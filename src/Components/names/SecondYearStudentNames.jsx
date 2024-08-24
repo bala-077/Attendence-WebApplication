@@ -7,7 +7,9 @@ const StudentNames = ({ selectedDate }) => {
         { id: 2002, name: 'Amirtha Selvan', attendance: {} },
     ]);
     
-    const handleInput = (event) => setInput(event.target.value);
+    const handleInput = (event) => {
+        setInput(event.target.value);
+    }
 
     const handleClick = () => {
         const newId = studentNames.length > 0 ? Math.max(...studentNames.map(s => s.id)) + 1 : 2001;

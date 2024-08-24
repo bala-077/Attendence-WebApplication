@@ -20,7 +20,7 @@ const LoginPage = () => {
     const userpass = "12345"
     if (input === userdata && password === userpass) {
       console.log('sucess')
-      navigate("/studentslist")
+      navigate("/section")
     }
     else {
       console.log("login failed")
